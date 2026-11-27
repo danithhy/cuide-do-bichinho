@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuide do Bichinho</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .cartao-jogo {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 350px;
+      width: 90%;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .bichinho {
+      font-size: 80px;
+      margin: 15px 0;
+      transition: transform 0.2s;
+    }
+
+    .placar {
+      font-size: 20px;
+      font-weight: bold;
+      color: #4a5568;
+      margin-bottom: 15px;
+    }
+
+    .mensagem {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2f855a;
+      min-height: 27px;
+      margin-bottom: 20px;
+    }
+
+    .botoes {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s, opacity 0.2s;
+    }
+
+    #btn-lanche {
+      background-color: #ffb703;
+      color: #fff;
+    }
+
+    #btn-lanche:hover:not(:disabled) {
+      background-color: #fb8500;
+    }
+
+    #btn-brincar {
+      background-color: #219ebc;
+      color: #fff;
+    }
+
+    #btn-brincar:hover:not(:disabled) {
+      background-color: #023047;
+    }
+
+    #btn-recomecar {
+      background-color: #e2e8f0;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    #btn-recomecar:hover {
+      background-color: #cbd5e0;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cartao-jogo">
+    <h1>Cuide do Bichinho</h1>
+    <div id="emoji-bichinho" class="bichinho">🐶</div>
+    
+    <div class="placar">
+      Felicidade: <span id="pontos">0</span> pontos
+    </div>
+
+    <div id="mensagem" class="mensagem"></div>
+
+    <div class="botoes">
+      <button id="btn-lanche" onclick="adicionarFelicidade(1)">🍎 Dar um lanche (+1)</button>
+      <button id="btn-brincar" onclick="adicionarFelicidade(2)">🎾 Brincar (+2)</button>
+      <button id="btn-recomecar" onclick="recomecarJogo()">🔄 Recomeçar</button>
+    </div>
+  </div>
+
+  <script>
+    let felicidade = 0;
+
+    const spanPontos = document.getElementById('pontos');
+    const divMensagem = document.getElementById('mensagem');
+    const emojiBichinho = document.getElementById('emoji-bichinho');
+    const btnLanche = document.getElementById('btn-lanche');
+    const btnBrincar = document.getElementById('btn-brincar');
+
+    function adicionarFelicidade(valor) {
+      felicidade += valor;
+      atualizarTela();
+    }
+
+    function atualizarTela() {
+      // Atualiza a pontuação na tela
+      spanPontos.textContent = felicidade;
+
+      // Animação simples no bichinho
+      emojiBichinho.style.transform = 'scale(1.15)';
+      setTimeout(() => {
+        emojiBichinho.style.transform = 'scale(1)';
+      }, 150);
+
+      // Verifica se chegou a 5 pontos ou mais
+      if (felicidade >= 5) {
+        divMensagem.textContent = '🎉 Seu bichinho está feliz!';
+        emojiBichinho.textContent = '🥳';
+        btnLanche.disabled = true;
+        btnBrincar.disabled = true;
+      }
+    }
+
+    function recomecarJogo() {
+      felicidade = 0;
+      spanPontos.textContent = felicidade;
+      divMensagem.textContent = '';
+      emojiBichinho.textContent = '🐶';
+      btnLanche.disabled = false;
+      btnBrincar.disabled = false;
+    }
+  </script>
+
+</body>
+</html>
